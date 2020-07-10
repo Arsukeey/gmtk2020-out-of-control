@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://World.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+
+[node name="World" type="YSort"]
+position = Vector2( 10.6251, 4.73625 )
+script = ExtResource( 1 )
+width = 800
+height = 600
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="TimerLbl" type="Label" parent="."]
+margin_left = 909.0
+margin_top = 10.0
+margin_right = 998.0
+margin_bottom = 56.0
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerSkip" type="Timer" parent="."]
+wait_time = 4096.0

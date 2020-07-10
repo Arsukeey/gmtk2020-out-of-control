@@ -13,7 +13,7 @@ extends Node2D
 # Take something that developers usually have control of 
 # and see what happens when you're no longer in charge.
 
-const SQR_SIZE = 64
+const SQR_SIZE = 32
 export var width = 30
 export var height = 20
 
@@ -31,6 +31,10 @@ func _ready():
 #            instance_floor.add_child(floor_sprite)
 #            add_child(instance_floor)
 
+func _process(delta):
+    $TimerLbl.text = "%.1f" % $TimerSkip.time_left
+    print($TimerSkip.time_left)
+
 func _on_Player_turn():
-    $TimerSkip.wait_time = randf() * 5.0
+    $TimerSkip.wait_time = randf() * 10.0 + 0.4
     $TimerSkip.start()
