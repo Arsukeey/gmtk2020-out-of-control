@@ -1,7 +1,7 @@
 top-down view
 inpirações: crypt of the necrodancer, into the breach, wizard of legend
 sistema de rerollar regras
-sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?)
+sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?) (sistema de xp com progress bar?)
 inimigos tem fraquezas a spells diferentes (elemetais?)
 stealth?
 "developers setting the wrong goals and giving the player bad information"

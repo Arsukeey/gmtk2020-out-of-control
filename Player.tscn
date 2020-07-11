@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -11,6 +11,48 @@
 [ext_resource path="res://assets/zkey.jpg" type="Texture" id=9]
 [ext_resource path="res://assets/xkey.jpg" type="Texture" id=10]
 [ext_resource path="res://assets/ckey.jpg" type="Texture" id=11]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/idle/hero-idle-front/hero-idle-front.png" type="Texture" id=12]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/idle/hero-idle-back/hero-idle-back.png" type="Texture" id=13]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/idle/hero-idle-side/hero-idle-side.png" type="Texture" id=14]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/walk/hero-walk-side/hero-walk-side-1.png" type="Texture" id=25]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/walk/hero-walk-front/hero-walk-front-1.png" type="Texture" id=30]
+[ext_resource path="res://assets/tiny-rpg-forest/sprites/hero/walk/hero-walk-back/hero-walk-back-1.png" type="Texture" id=32]
+[ext_resource path="res://Cimitar.gd" type="Script" id=33]
+[ext_resource path="res://FireBeam.gd" type="Script" id=34]
+[ext_resource path="res://Thunder.gd" type="Script" id=35]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "front",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "back",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "side-walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 32 ) ],
+"loop": true,
+"name": "back-walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 30 ) ],
+"loop": true,
+"name": "front-walk",
+"speed": 5.0
+} ]
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,10 +61,11 @@ script = ExtResource( 1 )
 wait_time = 0.15
 autostart = true
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -0.0663633, 0.0230255 )
-scale = Vector2( 0.39336, 0.380237 )
-texture = ExtResource( 2 )
+scale = Vector2( 1.2, 1.2 )
+frames = SubResource( 1 )
+animation = "side-walk"
 
 [node name="IceBeam" type="Node2D" parent="." groups=[
 "attack",
@@ -45,7 +88,7 @@ texture = ExtResource( 3 )
 "attack",
 ]]
 visible = false
-script = ExtResource( 6 )
+script = ExtResource( 33 )
 
 [node name="Sprite" type="Sprite" parent="Cimitar"]
 modulate = Color( 0, 1, 0.882353, 1 )
@@ -62,7 +105,7 @@ texture = ExtResource( 4 )
 "attack",
 ]]
 visible = false
-script = ExtResource( 6 )
+script = ExtResource( 34 )
 
 [node name="Sprite" type="Sprite" parent="FireBeam"]
 modulate = Color( 1, 0.858824, 0.313726, 1 )
@@ -79,7 +122,7 @@ texture = ExtResource( 5 )
 "attack",
 ]]
 visible = false
-script = ExtResource( 6 )
+script = ExtResource( 35 )
 
 [node name="Sprite" type="Sprite" parent="Thunder"]
 modulate = Color( 1, 0.937255, 0, 1 )
@@ -99,7 +142,7 @@ texture = ExtResource( 7 )
 [node name="Spell1Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
 position = Vector2( 417.414, 540 )
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/SpellMenu/Spell1Menu"]
+[node name="CurrentSpell" type="Sprite" parent="CanvasLayer/SpellMenu/Spell1Menu"]
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Key" type="Sprite" parent="CanvasLayer/SpellMenu/Spell1Menu"]
@@ -110,7 +153,7 @@ texture = ExtResource( 9 )
 [node name="Spell2Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
 position = Vector2( 536.757, 540 )
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/SpellMenu/Spell2Menu"]
+[node name="CurrentSpell" type="Sprite" parent="CanvasLayer/SpellMenu/Spell2Menu"]
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Key" type="Sprite" parent="CanvasLayer/SpellMenu/Spell2Menu"]
@@ -121,7 +164,7 @@ texture = ExtResource( 10 )
 [node name="Spell3Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
 position = Vector2( 631.645, 540 )
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/SpellMenu/Spell3Menu"]
+[node name="CurrentSpell" type="Sprite" parent="CanvasLayer/SpellMenu/Spell3Menu"]
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Key" type="Sprite" parent="CanvasLayer/SpellMenu/Spell3Menu"]
