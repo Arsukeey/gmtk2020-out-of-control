@@ -16,8 +16,9 @@ func generate_random_attacks():
     spell2 = attacks[2]
 
 func _ready():
+    randomize()
     generate_random_attacks()
-    pass
+
 
 func _process(_delta):
     var sqr_size = get_parent().SQR_SIZE
@@ -41,11 +42,14 @@ func _process(_delta):
         draw_spell_on_menu()
 
 func draw_spell_on_menu():
-    spell1.visible = true
-    spell1.get_node("Sprite").visible = false
-    var spell1_node = spell1.get_node("Node2D")
-    spell1_node.visible = true
-    spell1_node.position = $CanvasLayer/SpellMenu/Spell1Menu.position
+    $CanvasLayer/SpellMenu/Spell1Menu/Sprite.texture = spell0.get_node("Node2D/Icon").texture
+    $CanvasLayer/SpellMenu/Spell2Menu/Sprite.texture = spell1.get_node("Node2D/Icon").texture
+    $CanvasLayer/SpellMenu/Spell3Menu/Sprite.texture = spell2.get_node("Node2D/Icon").texture
+#    spell1.visible = true
+#    spell1.get_node("Sprite").visible = false
+#    var spell1_node = spell1.get_node("Node2D")
+#    spell1_node.visible = true
+#    spell1_node.position = $CanvasLayer/SpellMenu/Spell1Menu.position
 
 func _on_TimerSkip_timeout():
     emit_signal("turn")
