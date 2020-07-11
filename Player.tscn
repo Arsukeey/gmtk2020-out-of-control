@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/icebeamicon.jpg" type="Texture" id=3]
+[ext_resource path="res://assets/cimitaricon.jpg" type="Texture" id=4]
+[ext_resource path="res://assets/firebeamicon.jpg" type="Texture" id=5]
+[ext_resource path="res://IceBeam.gd" type="Script" id=6]
+[ext_resource path="res://assets/thundericon.jpg" type="Texture" id=7]
+[ext_resource path="res://SpellMenu.tscn" type="PackedScene" id=8]
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,7 +17,88 @@ wait_time = 0.15
 autostart = true
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 11.1754, 11.1149 )
+position = Vector2( -0.0663633, 0.0230255 )
 scale = Vector2( 0.39336, 0.380237 )
 texture = ExtResource( 2 )
+
+[node name="IceBeam" type="Node2D" parent="." groups=[
+"attack",
+]]
+visible = false
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="IceBeam"]
+modulate = Color( 0, 1, 0.882353, 1 )
+self_modulate = Color( 0, 1, 0.976471, 1 )
+position = Vector2( 50.2957, -5.41646 )
+texture = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="IceBeam"]
+
+[node name="Icon" type="Sprite" parent="IceBeam/Node2D"]
+texture = ExtResource( 3 )
+
+[node name="Cimitar" type="Node2D" parent="." groups=[
+"attack",
+]]
+visible = false
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Cimitar"]
+modulate = Color( 0, 1, 0.882353, 1 )
+self_modulate = Color( 0, 1, 0.976471, 1 )
+position = Vector2( 284.208, -2.9511 )
+texture = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="Cimitar"]
+
+[node name="Icon" type="Sprite" parent="Cimitar/Node2D"]
+texture = ExtResource( 4 )
+
+[node name="FireBeam" type="Node2D" parent="." groups=[
+"attack",
+]]
+visible = false
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="FireBeam"]
+modulate = Color( 1, 0.858824, 0.313726, 1 )
+self_modulate = Color( 1, 0.494118, 0, 1 )
+position = Vector2( 205.47, -4.39286 )
+texture = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="FireBeam"]
+
+[node name="Icon" type="Sprite" parent="FireBeam/Node2D"]
+texture = ExtResource( 5 )
+
+[node name="Thunder" type="Node2D" parent="." groups=[
+"attack",
+]]
+visible = false
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Thunder"]
+modulate = Color( 1, 0.937255, 0, 1 )
+self_modulate = Color( 0.968627, 1, 0, 1 )
+position = Vector2( 128.046, -3.88798 )
+texture = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="Thunder"]
+
+[node name="Icon" type="Sprite" parent="Thunder/Node2D"]
+texture = ExtResource( 7 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SpellMenu" parent="CanvasLayer" instance=ExtResource( 8 )]
+
+[node name="Spell1Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
+position = Vector2( 423.699, 520 )
+
+[node name="Spell2Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
+position = Vector2( 536.757, 520 )
+
+[node name="Spell3Menu" type="Position2D" parent="CanvasLayer/SpellMenu"]
+position = Vector2( 630.947, 520 )
 [connection signal="timeout" from="TimerMoveDelay" to="." method="_on_TimerMoveDelay_timeout"]

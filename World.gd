@@ -1,5 +1,6 @@
 extends Node2D
 
+export (PackedScene) var Enemy
 
 # Out of Control
 
@@ -14,13 +15,25 @@ extends Node2D
 # and see what happens when you're no longer in charge.
 
 const SQR_SIZE = 32
-export var width = 30
-export var height = 20
+var width = 30
+var height = 20
 
+enum Things {
+    Player,
+    Enemy,    
+}
+var grid = []
 #var floor_image = preload("res://assets/gridsquare.png")
 
 func _ready():
     randomize()
+    $Player.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
+    
+    for i in range(3):
+        var enemy1 = Enemy.instance()
+        enemy1.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
+        add_child(enemy1)
+        
 #    for i in range(width):
 #        for j in range(height):
 #            var instance_floor = Position2D.new()
@@ -30,11 +43,12 @@ func _ready():
 #            floor_sprite.texture = floor_image
 #            instance_floor.add_child(floor_sprite)
 #            add_child(instance_floor)
-
+    
 func _process(delta):
     $TimerLbl.text = "%.1f" % $TimerSkip.time_left
-    print($TimerSkip.time_left)
 
 func _on_Player_turn():
+    grid[$Player.position.x / SQR_SIZE][$Player.position.y / SQR_SIZE] = "player"
+    print(grid)
     $TimerSkip.wait_time = randf() * 10.0 + 0.4
     $TimerSkip.start()
