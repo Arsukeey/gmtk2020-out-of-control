@@ -14,35 +14,36 @@ export (PackedScene) var Enemy
 # Take something that developers usually have control of 
 # and see what happens when you're no longer in charge.
 
+signal player_hurt
+
+var enemy_wait = true
 const SQR_SIZE = 32
-var width = 30
-var height = 20
+var width = 31
+var height = 14
+
+var enemies = {
+    pos = [],
+    objs = []
+}
 
 enum Things {
     Player,
     Enemy,    
 }
-var grid = []
 #var floor_image = preload("res://assets/gridsquare.png")
-
-func _ready():
+func reset():
     randomize()
     $Player.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
-    
-    # instantiate grid
-    for w in height:
-        grid.append([])
-        grid[w] = []
-        for h in width:
-            grid[w].append([])
-            grid[w][h] = Node.new()
-        
+
     for i in range(3):
         var enemy = Enemy.instance()
         var pos = Vector2(randi() % width, randi() % height)
         enemy.position = Vector2(pos.x * SQR_SIZE, pos.y * SQR_SIZE)
-        grid[pos.y][pos.x] = enemy
+        enemies.pos.push_back(pos)
+        enemies.objs.push_back(enemy)
         add_child(enemy)
+func _ready():
+    reset()
         
 #    for i in range(width):
 #        for j in range(height):
@@ -66,12 +67,12 @@ func bresenham(start: Vector2, end: Vector2):
     if s.x < end.x:
         sx = 1
     else:
-        -1
-        
+        sx = -1
+
     if s.y < end.y:
         sy = 1
     else:
-        -1
+        sy = -1
         
     var err
     var err2
@@ -81,8 +82,9 @@ func bresenham(start: Vector2, end: Vector2):
         err = -dy / 2
     
     while true:
-        coordinates.push_back(start)
-        if start.x == end.x and start.y == end.y:
+        coordinates.push_back(s)
+
+        if s.x == end.x and s.y == end.y:
             break
         err2 = err
         if err2 > -dx:
@@ -96,10 +98,46 @@ func bresenham(start: Vector2, end: Vector2):
     return coordinates
 
 func _process(delta):
-    $TimerLbl.text = "%.1f" % $TimerSkip.time_left
+    pass
 
 func _on_Player_turn():
-    grid[$Player.position.x / SQR_SIZE][$Player.position.y / SQR_SIZE] = "player"
-    print(grid)
-    $TimerSkip.wait_time = randf() * 10.0 + 0.4
-    $TimerSkip.start()
+    print("turn")
+    if enemy_wait:
+        enemy_wait = false
+        return
+    for i in range(enemies.pos.size()):
+        var ppos = Vector2($Player.position.x / SQR_SIZE, $Player.position.y / SQR_SIZE)
+        var moves = bresenham(Vector2(enemies.pos[i].x, enemies.pos[i].y), \
+            Vector2(ppos.x, ppos.y))
+        
+        #print("moves[1]: " + str(moves[1]) + " ppos: " + str(ppos))
+            
+        if moves.size() < 1 or moves[1] == ppos:
+            print("Hearts: " + str($Player.hearts))
+            #enemies.objs[i].queue_free()
+            enemies.objs[i].visible = false
+#            enemies.pos.remove(i)
+#            enemies.objs.remove(i)
+            emit_signal("player_hurt")
+            continue
+            
+        var next_move = moves[1]
+        enemies.objs[i].move(Vector2(next_move.x * SQR_SIZE, next_move.y * SQR_SIZE))
+        enemies.pos[i] = next_move
+    enemy_wait = true
+
+func game_over():
+    $GameOverTimer.start()
+    enemy_wait = true
+
+    enemies = {
+        pos = [],
+        objs = []
+    }
+    
+    $GameOverMessage.visible = true
+
+
+func _on_GameOverTimer_timeout():
+    $GameOverMessage.visible = false
+    reset()

@@ -15,8 +15,8 @@ func _process(delta):
         visible = false
         #queue_free()
 
-func move_towards_player(ppos):
-    pass
+func move(pos):
+    position = pos
 
 func take_damage(dmg):
     hp -= dmg

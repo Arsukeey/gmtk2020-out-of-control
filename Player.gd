@@ -26,19 +26,19 @@ func generate_random_attacks():
     spell0 = attacks.pop_front()
     spell1 = attacks.pop_front()
     spell2 = attacks.pop_front()
+    draw_hearts()
 
 func _ready():
     randomize()
     generate_random_attacks()
-    draw_hearts()
+    
     
 func draw_hearts():
-    for i in range(1, hearts + 1):
+    for i in range(hearts):
         var heart = Sprite.new()
         heart.texture = preload("res://assets/heart.png")
         var pos = $CanvasLayer2/HeartPosition.position
         pos.x += i * 50 + HEART_SEPARATOR
-        print(pos.x)
         var a = Position2D.new()
         a.position = pos
         a.add_child(heart)
@@ -59,6 +59,9 @@ func _process(_delta):
                 $PlayerSprite.play("side")
             looking = Direction.Right
             $PlayerSprite.flip_h = false
+            emit_signal("turn")
+            can_move = false
+            $TimerMoveDelay.start()
         if Input.is_action_pressed("ui_left"):
             position.x -= sqr_size
             looking = Direction.Left
@@ -69,6 +72,9 @@ func _process(_delta):
                 last_move = Direction.Left
                 $PlayerSprite.play("side")
             $PlayerSprite.flip_h = true
+            emit_signal("turn")
+            can_move = false
+            $TimerMoveDelay.start()
         if Input.is_action_pressed("ui_up"):
             looking = Direction.Up
             position.y -= sqr_size
@@ -78,6 +84,9 @@ func _process(_delta):
             else:
                 last_move = Direction.Up
                 $PlayerSprite.play("back")
+                emit_signal("turn")
+            can_move = false
+            $TimerMoveDelay.start()
             $PlayerSprite.flip_h = false
         if Input.is_action_pressed("ui_down"):
             looking = Direction.Down
@@ -89,11 +98,6 @@ func _process(_delta):
                 $PlayerSprite.play("front")
             position.y += sqr_size
             $PlayerSprite.flip_h = false
-        
-        if Input.is_action_pressed("ui_right") or \
-        Input.is_action_pressed("ui_left") or \
-        Input.is_action_pressed("ui_up") or \
-        Input.is_action_pressed("ui_down"):
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
@@ -101,17 +105,17 @@ func _process(_delta):
         # attack
         draw_spell_on_menu()
         if Input.is_action_just_pressed("attack0"):
-            spell0.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
+            spell0.attack(get_parent().enemies, Vector2(position.x / sqr_size, position.y / sqr_size), looking)
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
         if Input.is_action_just_pressed("attack1"):
-            spell1.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
+            spell1.attack(get_parent().enemies, Vector2(position.x / sqr_size, position.y / sqr_size), looking)
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
         if Input.is_action_just_pressed("attack2"):
-            spell2.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
+            spell2.attack(get_parent().enemies, Vector2(position.x / sqr_size, position.y / sqr_size), looking)
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
@@ -121,8 +125,11 @@ func draw_spell_on_menu():
     $CanvasLayer/SpellMenu/Spell2Menu/CurrentSpell.texture = spell1.get_node("Node2D/Icon").texture
     $CanvasLayer/SpellMenu/Spell3Menu/CurrentSpell.texture = spell2.get_node("Node2D/Icon").texture
 
-func _on_TimerSkip_timeout():
-    emit_signal("turn")
-
 func _on_TimerMoveDelay_timeout():
     can_move = true
+
+func _on_World_player_hurt():
+    $CanvasLayer2.get_child(hearts).queue_free()
+    hearts -= 1
+    if hearts == 0:
+        get_parent().game_over()

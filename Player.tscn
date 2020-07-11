@@ -175,5 +175,5 @@ texture = ExtResource( 11 )
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="HeartPosition" type="Position2D" parent="CanvasLayer2"]
-position = Vector2( -30, 554.452 )
+position = Vector2( 31.5255, 543.62 )
 [connection signal="timeout" from="TimerMoveDelay" to="." method="_on_TimerMoveDelay_timeout"]
