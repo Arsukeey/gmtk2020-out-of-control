@@ -1,7 +1,7 @@
 top-down view
 inpirações: crypt of the necrodancer, into the breach, wizard of legend
 sistema de rerollar regras
-sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?) (sistema de xp com progress bar?)
+sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?) (sistema de xp/*controle* com progress bar?)
 inimigos tem fraquezas a spells diferentes (elemetais?)
 stealth?
 "developers setting the wrong goals and giving the player bad information"
@@ -9,5 +9,6 @@ random time limit
 inimigos crescem infinitamente
 3 skills por vez, player pode escolher uma das 3 pra usar e entao vai ser rerollado dnv (Z, X, C)
 coraçoes no canto inferior esquerdo
+barra de control
 
 Aye. But keeping in mind that while brainstorming is always happening and most "obvious" things have already been done, there's infinitely different ways of doing each thing. I say we just have fun finding our own ways to explore those random ideas.

@@ -68,7 +68,6 @@ func _process(_delta):
             else:
                 last_move = Direction.Left
                 $PlayerSprite.play("side")
-            $PlayerSprite.play("side")
             $PlayerSprite.flip_h = true
         if Input.is_action_pressed("ui_up"):
             looking = Direction.Up
@@ -102,17 +101,17 @@ func _process(_delta):
         # attack
         draw_spell_on_menu()
         if Input.is_action_just_pressed("attack0"):
-            spell0.attack(get_parent().grid, position)
+            spell0.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
         if Input.is_action_just_pressed("attack1"):
-            spell1.attack(get_parent().grid, position)
+            spell1.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
         if Input.is_action_just_pressed("attack2"):
-            spell2.attack(get_parent().grid, position)
+            spell2.attack(get_parent().grid, Vector2(position.x / sqr_size, position.y / sqr_size))
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()

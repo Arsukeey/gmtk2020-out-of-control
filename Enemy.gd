@@ -13,7 +13,10 @@ func _process(delta):
         $HP.texture_progress = preload("res://assets/lifebar_fill_red.png")
     if hp <= 0:
         visible = false
-        queue_free()
+        #queue_free()
+
+func move_towards_player(ppos):
+    pass
 
 func take_damage(dmg):
     hp -= dmg
