@@ -29,10 +29,20 @@ func _ready():
     randomize()
     $Player.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
     
+    # instantiate grid
+    for w in width:
+        grid.append([])
+        grid[w] = []
+        for h in height:
+            grid[w].append([])
+            grid[w][h] = 0
+        
     for i in range(3):
-        var enemy1 = Enemy.instance()
-        enemy1.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
-        add_child(enemy1)
+        var enemy = Enemy.instance()
+        var pos = Vector2(randi() % width, randi() % height)
+        enemy.position = Vector2(pos.x * SQR_SIZE, pos.y * SQR_SIZE)
+        grid[pos.x][pos.y] = enemy
+        add_child(enemy)
         
 #    for i in range(width):
 #        for j in range(height):

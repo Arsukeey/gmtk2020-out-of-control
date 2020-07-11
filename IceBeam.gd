@@ -2,6 +2,6 @@ extends Node2D
 
 const DAMAGE = 10
 
-func attack():
+func attack(grid, ppos):
     print("icebeam")
-    pass
+    grid
