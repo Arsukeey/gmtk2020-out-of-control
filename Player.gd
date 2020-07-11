@@ -21,12 +21,14 @@ var spell0 = null
 var spell1 = null
 var spell2 = null
 
+var attacks
+
 func generate_random_attacks(): 
-    var attacks = get_tree().get_nodes_in_group("attack")
+    attacks = get_tree().get_nodes_in_group("attack")
     attacks.shuffle()
-    spell0 = attacks.pop_front()
-    spell1 = attacks.pop_front()
-    spell2 = attacks.pop_front()
+    spell0 = attacks[0]
+    spell1 = attacks[1]
+    spell2 = attacks[2]
 
 func _ready():
     randomize()
@@ -109,16 +111,22 @@ func _process(_delta):
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
+            attacks.shuffle()
+            spell0 = attacks[0]
         if Input.is_action_just_pressed("attack1"):
             spell1.attack(get_parent().enemies, Vector2(position.x / sqr_size, position.y / sqr_size), looking)
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
+            attacks.shuffle()
+            spell1 = attacks[0]
         if Input.is_action_just_pressed("attack2"):
             spell2.attack(get_parent().enemies, Vector2(position.x / sqr_size, position.y / sqr_size), looking)
             emit_signal("turn")
             can_move = false
             $TimerMoveDelay.start()
+            attacks.shuffle()
+            spell2 = attacks[0]
 
 func draw_spell_on_menu():
     $CanvasLayer/SpellMenu/Spell1Menu/CurrentSpell.texture = spell0.get_node("Node2D/Icon").texture
