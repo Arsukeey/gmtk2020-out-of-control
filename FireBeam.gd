@@ -1,6 +1,6 @@
 extends Node2D
 
-const DAMAGE = 10
+const DAMAGE = 15
 
 func attack(grid, ppos, look_dir):
     print("firebeam")

@@ -1,6 +1,6 @@
 top-down view
 sistema de rerollar regras
-sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?) (sistema de xp/*controle* com progress bar?)
+sistema de cartas/skills que vem em ordem aleatoria (mas o player pode alterar o rng?) (sistema de xp/*controle*/sanidade com progress bar?)
 stealth?
 random time limit
 inimigos crescem infinitamente
@@ -11,5 +11,6 @@ barra de controle reseta
 quanto menos controle, mais demora pra vir a proxima spell e tem chance do personagem ir pra uma posição aleatoria, a tela piscar com alguma coisa, perder uma rodada
 porém da mais dano, 
 power ups de controle e vida
+inimigos mais rapidos que outro
 quanto mais vc mata, mais inimigos spawnam (e talvez a vida aumente)
 vc pode resetar seu controle depois de 20%

@@ -3,10 +3,11 @@ extends Node2D
 signal turn
 
 var hearts = 3
+
 const HEART_SEPARATOR = 40
 enum Direction {
-    Right,
     Up,
+    Right,
     Down,
     Left,
 }
@@ -26,7 +27,6 @@ func generate_random_attacks():
     spell0 = attacks.pop_front()
     spell1 = attacks.pop_front()
     spell2 = attacks.pop_front()
-    draw_hearts()
 
 func _ready():
     randomize()

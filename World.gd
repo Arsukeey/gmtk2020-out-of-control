@@ -34,7 +34,8 @@ enum Things {
 func reset():
     randomize()
     $Player.position = Vector2((randi() % width) * SQR_SIZE, (randi() % height) * SQR_SIZE)
-
+    $Player.hearts = 3
+    $Player.draw_hearts()
     for i in range(3):
         var enemy = Enemy.instance()
         var pos = Vector2(randi() % width, randi() % height)
@@ -42,6 +43,7 @@ func reset():
         enemies.pos.push_back(pos)
         enemies.objs.push_back(enemy)
         add_child(enemy)
+
 func _ready():
     reset()
         
@@ -112,14 +114,14 @@ func _on_Player_turn():
         
         #print("moves[1]: " + str(moves[1]) + " ppos: " + str(ppos))
             
-        if moves.size() < 1 or moves[1] == ppos:
+        if moves.size() < 3:
             print("Hearts: " + str($Player.hearts))
-            #enemies.objs[i].queue_free()
+            enemies.objs[i].queue_free()
             enemies.objs[i].visible = false
-#            enemies.pos.remove(i)
-#            enemies.objs.remove(i)
+            enemies.pos.remove(i)
+            enemies.objs.remove(i)
             emit_signal("player_hurt")
-            continue
+            break
             
         var next_move = moves[1]
         enemies.objs[i].move(Vector2(next_move.x * SQR_SIZE, next_move.y * SQR_SIZE))
@@ -130,13 +132,15 @@ func game_over():
     $GameOverTimer.start()
     enemy_wait = true
 
+    for i in enemies.objs:
+        i.queue_free()
+
     enemies = {
         pos = [],
         objs = []
-    }
+    } 
     
     $GameOverMessage.visible = true
-
 
 func _on_GameOverTimer_timeout():
     $GameOverMessage.visible = false

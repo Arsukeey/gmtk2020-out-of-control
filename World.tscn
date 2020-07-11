@@ -491,6 +491,7 @@ __meta__ = {
 
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 [connection signal="player_hurt" from="." to="Player" method="_on_World_player_hurt"]
 [connection signal="turn" from="Player" to="." method="_on_Player_turn"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
